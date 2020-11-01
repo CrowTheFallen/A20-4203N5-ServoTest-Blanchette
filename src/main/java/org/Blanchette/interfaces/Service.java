@@ -1,5 +1,6 @@
 package org.Blanchette.interfaces;
 
+import org.Blanchette.exceptions.QuestionInvalide;
 import org.Blanchette.modele.VDQuestion;
 import org.Blanchette.modele.VDVote;
 
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public interface Service {
 
-    void ajoutQuestion(VDQuestion question);
+    void ajoutQuestion(VDQuestion question) throws QuestionInvalide;
 
     void ajoutVote(VDVote vote);
 
