@@ -1,6 +1,8 @@
 package org.Blanchette.impl;
 
+import com.github.javafaker.Faker;
 import org.Blanchette.exceptions.QuestionInvalide;
+import org.Blanchette.exceptions.VoteInvalide;
 import org.Blanchette.interfaces.Service;
 import org.Blanchette.modele.VDQuestion;
 import org.Blanchette.modele.VDVote;
@@ -12,34 +14,46 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ServiceImplementation implements Service {
-    private static List<VDQuestion> Questions = new ArrayList<VDQuestion>();
+    private List<VDQuestion> questions = new ArrayList<VDQuestion>();
+    private List<VDVote> votes = new ArrayList<VDVote>();
+    private int idQuestionCompteur;
+    private int idVoteCompteur;
 
     @Override
     public void ajoutQuestion(VDQuestion question) throws QuestionInvalide {
         //Validation
-        if(question.Id != null) throw new QuestionInvalide();
-        if(question.Contenue.length() < 5 || question.Contenue.length() > 255) throw new QuestionInvalide();
-        for (VDQuestion Q: questionsParNombreVotes()) {
-            if(question.Contenue.toUpperCase().equals(Q.Contenue.toUpperCase()) )
+        if(question.id != null) throw new QuestionInvalide();
+        if(question.contenue.length() < 5 || question.contenue.length() > 255) throw new QuestionInvalide();
+        for (VDQuestion Q: questions) {
+            if(question.contenue.toUpperCase().equals(Q.contenue.toUpperCase()) )
                 throw new QuestionInvalide();
         }
         //Ajout
-        int int_random = ThreadLocalRandom.current().nextInt(1,10000000);
-        question.Id = "" + int_random;
-        Questions.add(question);
+        idQuestionCompteur++;
+        question.id = "" + idQuestionCompteur;
+        questions.add(question);
     }
 
     @Override
-    public void ajoutVote(VDVote vote) {
+    public void ajoutVote(VDVote vote) throws VoteInvalide {
         //Validation
+        if(vote.id != null) throw new VoteInvalide();
+        if(vote.vote < 0 || vote.vote > 5) throw new VoteInvalide();
+        for (VDQuestion Q: questions) {
+            if(Integer.parseInt(Q.id) == vote.idQuestion)
+                if(Q.nom.toUpperCase().equals(vote.nom.toUpperCase()))
+                    throw new VoteInvalide();
+        }
 
         //Ajout
-
+        idVoteCompteur++;
+        vote.id = "" + idVoteCompteur;
+        votes.add(vote);
     }
 
     @Override
     public List<VDQuestion> questionsParNombreVotes() {
-        return new ArrayList<VDQuestion>(Questions);
+        return new ArrayList<VDQuestion>(questions);
     }
 
     @Override
@@ -59,6 +73,6 @@ public class ServiceImplementation implements Service {
 
     @Override
     public String nomEtudiant() {
-        return null;
+        return "Alex Blanchette";
     }
 }

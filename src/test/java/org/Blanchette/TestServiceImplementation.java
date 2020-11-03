@@ -13,32 +13,30 @@ public class TestServiceImplementation {
     public void testCréationQuestionValide() throws QuestionInvalide {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
-        vdQuestion.Contenue = "Bonjour je suis une nouvelle question";
-        service.questionsParNombreVotes().clear();
+        vdQuestion.contenue = "Bonjour je suis une nouvelle question";
         service.ajoutQuestion(vdQuestion);
-        Assert.assertEquals(1,service.questionsParNombreVotes().size() -1);
-
+        Assert.assertNotNull(vdQuestion.id);
     }
     @Test(expected = QuestionInvalide.class)
     public void testCréationQuestionCourt() throws QuestionInvalide {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
-        vdQuestion.Contenue = "Lola";
+        vdQuestion.contenue = "Lola";
         service.ajoutQuestion(vdQuestion);
     }
     @Test(expected = QuestionInvalide.class)
     public void testCréationQuestionLong() throws QuestionInvalide {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
-        vdQuestion.Contenue = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        vdQuestion.contenue = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         service.ajoutQuestion(vdQuestion);
     }
     @Test(expected = QuestionInvalide.class)
     public void testCréationQuestionId() throws QuestionInvalide {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
-        vdQuestion.Contenue = "Bonjour je suis une nouvelle question";
-        vdQuestion.Id = ""+3;
+        vdQuestion.contenue = "Bonjour je suis une nouvelle question";
+        vdQuestion.id = ""+3;
         service.ajoutQuestion(vdQuestion);
     }
     @Test(expected = QuestionInvalide.class)
@@ -46,8 +44,8 @@ public class TestServiceImplementation {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDQuestion vdQuestion2 = new VDQuestion();
-        vdQuestion.Contenue = "bonjour je suis une nouvelle questionn";
-        vdQuestion2.Contenue = "BONJOUR JE SUIS UNE NOUVELLE QUESTIONN";
+        vdQuestion.contenue = "bonjour je suis une nouvelle questionn";
+        vdQuestion2.contenue = "BONJOUR JE SUIS UNE NOUVELLE QUESTIONN";
         service.ajoutQuestion(vdQuestion);
         service.ajoutQuestion(vdQuestion2);
 

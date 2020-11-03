@@ -1,6 +1,7 @@
 package org.Blanchette.interfaces;
 
 import org.Blanchette.exceptions.QuestionInvalide;
+import org.Blanchette.exceptions.VoteInvalide;
 import org.Blanchette.modele.VDQuestion;
 import org.Blanchette.modele.VDVote;
 
@@ -11,7 +12,7 @@ public interface Service {
 
     void ajoutQuestion(VDQuestion question) throws QuestionInvalide;
 
-    void ajoutVote(VDVote vote);
+    void ajoutVote(VDVote vote) throws VoteInvalide;
 
     List<VDQuestion> questionsParNombreVotes();
 
