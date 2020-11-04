@@ -40,11 +40,12 @@ public class ServiceImplementation implements Service {
         if(vote.id != null) throw new VoteInvalide();
         if(vote.vote < 0 || vote.vote > 5) throw new VoteInvalide();
         for (VDQuestion Q: questions) {
-            if(Integer.parseInt(Q.id) == vote.idQuestion)
-                if(Q.nom.toUpperCase().equals(vote.nom.toUpperCase()))
-                    throw new VoteInvalide();
+            for (VDVote V: votes)
+                if(Integer.parseInt(Q.id) == vote.idQuestion){
+                    if(vote.nom.toUpperCase().equals(V.nom.toUpperCase()))
+                        throw new VoteInvalide();
+            }
         }
-
         //Ajout
         idVoteCompteur++;
         vote.id = "" + idVoteCompteur;

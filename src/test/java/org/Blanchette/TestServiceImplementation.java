@@ -1,14 +1,16 @@
 package org.Blanchette;
 
 import org.Blanchette.exceptions.QuestionInvalide;
+import org.Blanchette.exceptions.VoteInvalide;
 import org.Blanchette.impl.ServiceImplementation;
 import org.Blanchette.interfaces.Service;
 import org.Blanchette.modele.VDQuestion;
+import org.Blanchette.modele.VDVote;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class TestServiceImplementation {
-//Testes pour la création d'une question
+//Tests pour la création d'une question
     @Test
     public void testCréationQuestionValide() throws QuestionInvalide {
         Service service = new ServiceImplementation();
@@ -51,7 +53,72 @@ public class TestServiceImplementation {
 
     }
 
-//Testes pour la création d'un vote
-
-
+//Tests pour la création d'un vote
+    @Test
+    public void testCréationVoteValide() throws VoteInvalide ,QuestionInvalide {
+        Service service = new ServiceImplementation();
+        VDQuestion vdQuestion = new VDQuestion();
+        VDVote vdVote = new VDVote();
+        vdQuestion.contenue = "Bonjour je suis une nouvelle question";
+        service.ajoutQuestion(vdQuestion);
+        vdVote.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote.nom = "Bob";
+        vdVote.vote = 3;
+        service.ajoutVote(vdVote);
+        Assert.assertNotNull(vdVote);
+    }
+    @Test(expected = VoteInvalide.class)
+    public void testCréationVoteDouble() throws VoteInvalide ,QuestionInvalide {
+        Service service = new ServiceImplementation();
+        VDQuestion vdQuestion = new VDQuestion();
+        VDVote vdVote = new VDVote();
+        VDVote vdVote2 = new VDVote();
+        vdQuestion.contenue = "Bonjour je suis une nouvelle question";
+        service.ajoutQuestion(vdQuestion);
+        vdVote.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote.nom = "Bob";
+        vdVote.vote = 3;
+        service.ajoutVote(vdVote);
+        vdVote2.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote2.nom = "Bob";
+        vdVote2.vote = 4;
+        service.ajoutVote(vdVote2);
+    }
+    @Test(expected = VoteInvalide.class)
+    public void testCréationId() throws VoteInvalide ,QuestionInvalide {
+        Service service = new ServiceImplementation();
+        VDQuestion vdQuestion = new VDQuestion();
+        VDVote vdVote = new VDVote();
+        vdQuestion.contenue = "Bonjour je suis une nouvelle question";
+        service.ajoutQuestion(vdQuestion);
+        vdVote.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote.nom = "Bob";
+        vdVote.vote = 3;
+        vdVote.id = String.valueOf(16);
+        service.ajoutVote(vdVote);
+    }
+    @Test(expected = VoteInvalide.class)
+    public void testCréationTropPetit() throws VoteInvalide ,QuestionInvalide {
+        Service service = new ServiceImplementation();
+        VDQuestion vdQuestion = new VDQuestion();
+        VDVote vdVote = new VDVote();
+        vdQuestion.contenue = "Bonjour je suis une nouvelle question";
+        service.ajoutQuestion(vdQuestion);
+        vdVote.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote.nom = "Bob";
+        vdVote.vote = -1;
+        service.ajoutVote(vdVote);
+    }
+    @Test(expected = VoteInvalide.class)
+    public void testCréationTropGrand() throws VoteInvalide ,QuestionInvalide {
+        Service service = new ServiceImplementation();
+        VDQuestion vdQuestion = new VDQuestion();
+        VDVote vdVote = new VDVote();
+        vdQuestion.contenue = "Bonjour je suis une nouvelle question";
+        service.ajoutQuestion(vdQuestion);
+        vdVote.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote.nom = "Bob";
+        vdVote.vote = 6;
+        service.ajoutVote(vdVote);
+    }
 }
