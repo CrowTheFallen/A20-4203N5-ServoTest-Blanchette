@@ -80,11 +80,38 @@ public class ServiceImplementation implements Service {
 
     @Override
     public Map<Integer, Integer> distributionPour(VDQuestion question) {
-        return null;
+        Map<Integer, Integer> distribution = new HashMap<Integer, Integer>();
+        int compteur1 =0;
+        int compteur2 =0;
+        int compteur3 =0;
+        int compteur4 =0;
+        int compteur5 =0;
+        for (VDVote V: votes) {
+            if(Integer.parseInt(question.id) == V.idQuestion)
+                switch (V.vote){
+                case 1: compteur1++;
+                    break;
+                case 2: compteur2++;
+                    break;
+                case 3: compteur3++;
+                    break;
+                case 4: compteur4++;
+                    break;
+                case 5: compteur5++;
+                    break;
+            }
+        }
+        distribution.put(1,compteur1);
+        distribution.put(2,compteur2);
+        distribution.put(3,compteur3);
+        distribution.put(4,compteur4);
+        distribution.put(5,compteur5);
+        return distribution;
     }
 
     @Override
     public double moyennePour(VDQuestion question) {
+
         return 0;
     }
 
