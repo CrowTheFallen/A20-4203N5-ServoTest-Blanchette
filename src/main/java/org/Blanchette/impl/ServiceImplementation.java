@@ -111,8 +111,12 @@ public class ServiceImplementation implements Service {
 
     @Override
     public double moyennePour(VDQuestion question) {
-
-        return 0;
+        double compteur =0;
+        for (VDVote V: votes)
+            if(Integer.parseInt(question.id) == V.idQuestion)
+               compteur+= V.vote;
+            compteur= compteur / votes.size();
+        return compteur;
     }
 
     @Override

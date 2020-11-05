@@ -211,10 +211,49 @@ public class TestServiceImplementation {
         vdVote5.vote = 1;
         service.ajoutVote(vdVote5);
 
-       System.out.println(service.distributionPour(vdQuestion));
+        Assert.assertNotNull(service.distributionPour(vdQuestion));
+
     }
     //Tests pour la moyenne
+    @Test
+    public void testMoyenne() throws QuestionInvalide, VoteInvalide {
+        Service service = new ServiceImplementation();
+        VDQuestion vdQuestion = new VDQuestion();
+        VDVote vdVote1 = new VDVote();
+        VDVote vdVote2 = new VDVote();
+        VDVote vdVote3 = new VDVote();
+        VDVote vdVote4 = new VDVote();
+        VDVote vdVote5 = new VDVote();
+        vdQuestion.contenue = "Bonjour je suis une nouvelle question";
+        service.ajoutQuestion(vdQuestion);
 
+        vdVote1.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote1.nom = "Bob";
+        vdVote1.vote = 3;
+        service.ajoutVote(vdVote1);
+        //
+        vdVote2.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote2.nom = "Robert";
+        vdVote2.vote = 2;
+        service.ajoutVote(vdVote2);
+        //
+        vdVote3.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote3.nom = "Bobi";
+        vdVote3.vote = 3;
+        service.ajoutVote(vdVote3);
+        //
+        vdVote4.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote4.nom = "Bobo";
+        vdVote4.vote = 5;
+        service.ajoutVote(vdVote4);
+        //
+        vdVote5.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote5.nom = "Bobar";
+        vdVote5.vote = 1;
+        service.ajoutVote(vdVote5);
+
+        Assert.assertEquals("2.8",String.valueOf(service.moyennePour(vdQuestion)) );
+    }
     //Tests pour l'écart-type
 
     //Test pour NomEtudiant
