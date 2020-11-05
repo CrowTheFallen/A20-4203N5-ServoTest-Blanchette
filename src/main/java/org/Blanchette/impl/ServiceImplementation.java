@@ -121,7 +121,22 @@ public class ServiceImplementation implements Service {
 
     @Override
     public double ecartTypePour(VDQuestion question) {
-        return 0;
+        List<Integer> liste = new ArrayList<Integer>();
+        double compteur =0;
+        for (VDVote V: votes)
+            if(Integer.parseInt(question.id) == V.idQuestion){
+               compteur+= V.vote;
+                liste.add(V.vote);
+            }
+        compteur= compteur / votes.size();
+
+        double standardDeviation = 0.0;
+
+        double moyenne = compteur;
+        for(double num: liste) {
+            standardDeviation += Math.pow(num - moyenne, 2);
+        }
+        return Math.sqrt(standardDeviation/liste.size());
     }
 
     @Override

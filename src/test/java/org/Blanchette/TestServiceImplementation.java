@@ -255,7 +255,33 @@ public class TestServiceImplementation {
         Assert.assertEquals("2.8",String.valueOf(service.moyennePour(vdQuestion)) );
     }
     //Tests pour l'écart-type
+    @Test
+    public void testÉcartType() throws QuestionInvalide, VoteInvalide {
+        Service service = new ServiceImplementation();
+        VDQuestion vdQuestion = new VDQuestion();
+        VDVote vdVote1 = new VDVote();
+        VDVote vdVote2 = new VDVote();
+        VDVote vdVote3 = new VDVote();
+        vdQuestion.contenue = "Bonjour je suis une nouvelle question";
+        service.ajoutQuestion(vdQuestion);
 
+        vdVote1.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote1.nom = "Bob";
+        vdVote1.vote = 2;
+        service.ajoutVote(vdVote1);
+        //
+        vdVote2.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote2.nom = "Robert";
+        vdVote2.vote = 2;
+        service.ajoutVote(vdVote2);
+        //
+        vdVote3.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote3.nom = "Bobi";
+        vdVote3.vote = 5;
+        service.ajoutVote(vdVote3);
+        
+        Assert.assertEquals("1.4142135623730951", String.valueOf(service.ecartTypePour(vdQuestion)));
+    }
     //Test pour NomEtudiant
     @Test
     public void testNomEtudiant() {
