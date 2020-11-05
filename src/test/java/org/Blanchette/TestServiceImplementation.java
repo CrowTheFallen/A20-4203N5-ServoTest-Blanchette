@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class TestServiceImplementation {
-//Tests pour la création d'une question
+    //Tests pour la création d'une question
     @Test
     public void testCréationQuestionValide() throws QuestionInvalide {
         Service service = new ServiceImplementation();
@@ -53,7 +53,7 @@ public class TestServiceImplementation {
 
     }
 
-//Tests pour la création d'un vote
+    //Tests pour la création d'un vote
     @Test
     public void testCréationVoteValide() throws VoteInvalide ,QuestionInvalide {
         Service service = new ServiceImplementation();
@@ -120,5 +120,73 @@ public class TestServiceImplementation {
         vdVote.nom = "Bob";
         vdVote.vote = 6;
         service.ajoutVote(vdVote);
+    }
+    //Tests pour le triage de questions
+    @Test
+    public void testTriage() throws VoteInvalide ,QuestionInvalide {
+        Service service = new ServiceImplementation();
+        VDQuestion vdQuestion1 = new VDQuestion();
+        VDVote vdVote1 = new VDVote();
+        VDQuestion vdQuestion2 = new VDQuestion();
+        VDVote vdVote2 = new VDVote();
+        VDQuestion vdQuestion3 = new VDQuestion();
+        VDVote vdVote3 = new VDVote();
+        VDQuestion vdQuestion4 = new VDQuestion();
+        VDVote vdVote4 = new VDVote();
+        VDQuestion vdQuestion5 = new VDQuestion();
+        VDVote vdVote5 = new VDVote();
+        //
+        vdQuestion1.contenue = "Bonjour je suis une nouvelle question 1";
+        service.ajoutQuestion(vdQuestion1);
+        vdVote1.idQuestion = Integer.parseInt(vdQuestion1.id);
+        vdVote1.nom = "Bob";
+        vdVote1.vote = 3;
+        service.ajoutVote(vdVote1);
+        //
+        vdQuestion2.contenue = "Bonjour je suis une nouvelle question 2";
+        service.ajoutQuestion(vdQuestion2);
+        vdVote2.idQuestion = Integer.parseInt(vdQuestion2.id);
+        vdVote2.nom = "Robert";
+        vdVote2.vote = 2;
+        service.ajoutVote(vdVote2);
+        //
+        vdQuestion3.contenue = "Bonjour je suis une nouvelle question 3";
+        service.ajoutQuestion(vdQuestion3);
+        vdVote3.idQuestion = Integer.parseInt(vdQuestion2.id);
+        vdVote3.nom = "Bobi";
+        vdVote3.vote = 3;
+        service.ajoutVote(vdVote3);
+        //
+        vdQuestion4.contenue = "Bonjour je suis une nouvelle question 4";
+        service.ajoutQuestion(vdQuestion4);
+        vdVote4.idQuestion = Integer.parseInt(vdQuestion2.id);
+        vdVote4.nom = "Bobo";
+        vdVote4.vote = 5;
+        service.ajoutVote(vdVote4);
+        //
+        vdQuestion5.contenue = "Bonjour je suis une nouvelle question 5";
+        service.ajoutQuestion(vdQuestion5);
+        vdVote5.idQuestion = Integer.parseInt(vdQuestion2.id);
+        vdVote5.nom = "Bobar";
+        vdVote5.vote = 1;
+        service.ajoutVote(vdVote5);
+
+        for (VDQuestion Q: service.questionsParNombreVotes()) {
+            System.out.println(Q.contenue);
+        }
+
+        Assert.assertNotNull(service.questionsParNombreVotes());
+    }
+    //Tests pour la distribution
+
+    //Tests pour la moyenne
+
+    //Tests pour l'écart-type
+
+    //Test pour NomEtudiant
+    @Test
+    public void testNomEtudiant() {
+        Service service = new ServiceImplementation();
+        Assert.assertEquals("Alex Blanchette",service.nomEtudiant());
     }
 }

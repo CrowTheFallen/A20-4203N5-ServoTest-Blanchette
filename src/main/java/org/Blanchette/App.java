@@ -13,7 +13,7 @@ public class App
     public static void main( String[] args )
     {
         Service service = new ServiceImplementation();
-
+        service.questionsParNombreVotes();
 
 
         System.out.println( "Hello" );
