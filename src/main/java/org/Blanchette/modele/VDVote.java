@@ -11,7 +11,9 @@ public class VDVote {
     }
 
     public VDVote(int vote, String nom, int QuestionAVoter){
-
+        this.vote = vote;
+        this.nom = nom;
+        this.idQuestion = QuestionAVoter;
     }
 }
 

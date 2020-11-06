@@ -12,28 +12,7 @@ public class VDQuestion extends VDVote {
     }
 
     public VDQuestion(String contenue){
-
+        this.contenue = contenue;
     }
 
-    //@Override
-    //public boolean equals(Object o) {
-    //    if (this == o) return true;
-    //    if (o == null || getClass() != o.getClass()) return false;
-    //    VDQuestion that = (VDQuestion) o;
-    //    return Objects.equals(Contenue, that.Contenue) &&
-    //            Objects.equals(Id, that.Id);
-   // }
-
-  //  @Override
-   // public int hashCode() {
-   //     return Objects.hash(Contenue, Id);
-    //}
-
-   // @Override
-   // public String toString() {
-   //     return "VDQuestion{" +
-    //            "Contenue='" + Contenue + '\'' +
-    //            ", Id='" + Id + '\'' +
-   //             '}';
-    //}
 }

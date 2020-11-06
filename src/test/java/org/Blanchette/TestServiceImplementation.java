@@ -1,7 +1,6 @@
 package org.Blanchette;
 
-import org.Blanchette.exceptions.QuestionInvalide;
-import org.Blanchette.exceptions.VoteInvalide;
+import org.Blanchette.exceptions.*;
 import org.Blanchette.impl.ServiceImplementation;
 import org.Blanchette.interfaces.Service;
 import org.Blanchette.modele.VDQuestion;
@@ -12,37 +11,37 @@ import org.junit.Test;
 public class TestServiceImplementation {
     //Tests pour la création d'une question
     @Test
-    public void testCréationQuestionValide() throws QuestionInvalide {
+    public void testCréationQuestionValide() throws QuestionInvalide, QuestionInvalideLongueur, QuestionInvalideExistante {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         vdQuestion.contenue = "Bonjour je suis une nouvelle question";
         service.ajoutQuestion(vdQuestion);
         Assert.assertNotNull(vdQuestion.id);
     }
-    @Test(expected = QuestionInvalide.class)
-    public void testCréationQuestionCourt() throws QuestionInvalide {
+    @Test(expected = QuestionInvalideLongueur.class)
+    public void testCréationQuestionCourt() throws QuestionInvalide, QuestionInvalideLongueur, QuestionInvalideExistante {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         vdQuestion.contenue = "Lola";
         service.ajoutQuestion(vdQuestion);
     }
-    @Test(expected = QuestionInvalide.class)
-    public void testCréationQuestionLong() throws QuestionInvalide {
+    @Test(expected = QuestionInvalideLongueur.class)
+    public void testCréationQuestionLong() throws QuestionInvalide,QuestionInvalideLongueur,QuestionInvalideExistante {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         vdQuestion.contenue = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         service.ajoutQuestion(vdQuestion);
     }
     @Test(expected = QuestionInvalide.class)
-    public void testCréationQuestionId() throws QuestionInvalide {
+    public void testCréationQuestionId() throws QuestionInvalide,QuestionInvalideLongueur,QuestionInvalideExistante {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         vdQuestion.contenue = "Bonjour je suis une nouvelle question";
         vdQuestion.id = ""+3;
         service.ajoutQuestion(vdQuestion);
     }
-    @Test(expected = QuestionInvalide.class)
-    public void testCréationQuestionDouble() throws QuestionInvalide {
+    @Test(expected = QuestionInvalideExistante.class)
+    public void testCréationQuestionDouble() throws QuestionInvalide,QuestionInvalideLongueur,QuestionInvalideExistante {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDQuestion vdQuestion2 = new VDQuestion();
@@ -55,7 +54,7 @@ public class TestServiceImplementation {
 
     //Tests pour la création d'un vote
     @Test
-    public void testCréationVoteValide() throws VoteInvalide ,QuestionInvalide {
+    public void testCréationVoteValide() throws VoteInvalide ,QuestionInvalide, QuestionInvalideLongueur,QuestionInvalideExistante, VoteInvalideLongueur, VoteInvalideExistant {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDVote vdVote = new VDVote();
@@ -67,8 +66,8 @@ public class TestServiceImplementation {
         service.ajoutVote(vdVote);
         Assert.assertNotNull(vdVote);
     }
-    @Test(expected = VoteInvalide.class)
-    public void testCréationVoteDouble() throws VoteInvalide ,QuestionInvalide {
+    @Test(expected = VoteInvalideExistant.class)
+    public void testCréationVoteDouble() throws VoteInvalide ,QuestionInvalide, QuestionInvalideLongueur, QuestionInvalideExistante,VoteInvalideLongueur, VoteInvalideExistant {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDVote vdVote = new VDVote();
@@ -85,7 +84,7 @@ public class TestServiceImplementation {
         service.ajoutVote(vdVote2);
     }
     @Test(expected = VoteInvalide.class)
-    public void testCréationId() throws VoteInvalide ,QuestionInvalide {
+    public void testCréationId() throws VoteInvalide ,QuestionInvalide, QuestionInvalideLongueur,QuestionInvalideExistante, VoteInvalideLongueur,VoteInvalideExistant {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDVote vdVote = new VDVote();
@@ -97,8 +96,8 @@ public class TestServiceImplementation {
         vdVote.id = String.valueOf(16);
         service.ajoutVote(vdVote);
     }
-    @Test(expected = VoteInvalide.class)
-    public void testCréationTropPetit() throws VoteInvalide ,QuestionInvalide {
+    @Test(expected = VoteInvalideLongueur.class)
+    public void testCréationTropPetit() throws VoteInvalide ,QuestionInvalide, QuestionInvalideLongueur, QuestionInvalideExistante, VoteInvalideLongueur,VoteInvalideExistant {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDVote vdVote = new VDVote();
@@ -109,8 +108,8 @@ public class TestServiceImplementation {
         vdVote.vote = -1;
         service.ajoutVote(vdVote);
     }
-    @Test(expected = VoteInvalide.class)
-    public void testCréationTropGrand() throws VoteInvalide ,QuestionInvalide {
+    @Test(expected = VoteInvalideLongueur.class)
+    public void testCréationTropGrand() throws VoteInvalide ,QuestionInvalide, QuestionInvalideLongueur, QuestionInvalideExistante,VoteInvalideLongueur,VoteInvalideExistant {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDVote vdVote = new VDVote();
@@ -123,7 +122,7 @@ public class TestServiceImplementation {
     }
     //Tests pour le triage de questions
     @Test
-    public void testTriage() throws VoteInvalide ,QuestionInvalide {
+    public void testTriage() throws VoteInvalide ,QuestionInvalide, QuestionInvalideLongueur, QuestionInvalideExistante,VoteInvalideLongueur,VoteInvalideExistant {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion1 = new VDQuestion();
         VDVote vdVote1 = new VDVote();
@@ -175,7 +174,7 @@ public class TestServiceImplementation {
     }
     //Tests pour la distribution
     @Test
-    public void testdistribution() throws QuestionInvalide, VoteInvalide {
+    public void testdistribution() throws QuestionInvalide, VoteInvalide, QuestionInvalideLongueur, QuestionInvalideExistante,VoteInvalideLongueur,VoteInvalideExistant {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDVote vdVote1 = new VDVote();
@@ -183,6 +182,7 @@ public class TestServiceImplementation {
         VDVote vdVote3 = new VDVote();
         VDVote vdVote4 = new VDVote();
         VDVote vdVote5 = new VDVote();
+        VDVote vdVote6 = new VDVote();
         vdQuestion.contenue = "Bonjour je suis une nouvelle question";
         service.ajoutQuestion(vdQuestion);
 
@@ -210,13 +210,18 @@ public class TestServiceImplementation {
         vdVote5.nom = "Bobar";
         vdVote5.vote = 1;
         service.ajoutVote(vdVote5);
+        //
+        vdVote6.idQuestion = Integer.parseInt(vdQuestion.id);
+        vdVote6.nom = "Bobarion";
+        vdVote6.vote = 4;
+        service.ajoutVote(vdVote6);
 
         Assert.assertNotNull(service.distributionPour(vdQuestion));
 
     }
     //Tests pour la moyenne
     @Test
-    public void testMoyenne() throws QuestionInvalide, VoteInvalide {
+    public void testMoyenne() throws QuestionInvalide, VoteInvalide, QuestionInvalideLongueur, QuestionInvalideExistante,VoteInvalideLongueur,VoteInvalideExistant {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDVote vdVote1 = new VDVote();
@@ -256,7 +261,7 @@ public class TestServiceImplementation {
     }
     //Tests pour l'écart-type
     @Test
-    public void testÉcartType() throws QuestionInvalide, VoteInvalide {
+    public void testÉcartType() throws QuestionInvalide, VoteInvalide, QuestionInvalideLongueur, QuestionInvalideExistante, VoteInvalideLongueur,VoteInvalideExistant {
         Service service = new ServiceImplementation();
         VDQuestion vdQuestion = new VDQuestion();
         VDVote vdVote1 = new VDVote();
@@ -279,7 +284,7 @@ public class TestServiceImplementation {
         vdVote3.nom = "Bobi";
         vdVote3.vote = 5;
         service.ajoutVote(vdVote3);
-        
+
         Assert.assertEquals("1.4142135623730951", String.valueOf(service.ecartTypePour(vdQuestion)));
     }
     //Test pour NomEtudiant

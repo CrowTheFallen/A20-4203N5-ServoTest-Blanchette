@@ -2,8 +2,7 @@ package org.Blanchette.impl;
 
 import com.github.javafaker.Faker;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-import org.Blanchette.exceptions.QuestionInvalide;
-import org.Blanchette.exceptions.VoteInvalide;
+import org.Blanchette.exceptions.*;
 import org.Blanchette.interfaces.Service;
 import org.Blanchette.modele.VDQuestion;
 import org.Blanchette.modele.VDVote;
@@ -20,13 +19,13 @@ public class ServiceImplementation implements Service {
     private int idVoteCompteur;
 
     @Override
-    public void ajoutQuestion(VDQuestion question) throws QuestionInvalide {
+    public void ajoutQuestion(VDQuestion question) throws QuestionInvalide, QuestionInvalideLongueur, QuestionInvalideExistante {
         //Validation
         if(question.id != null) throw new QuestionInvalide();
-        if(question.contenue.length() < 5 || question.contenue.length() > 255) throw new QuestionInvalide();
+        if(question.contenue.length() < 5 || question.contenue.length() > 255) throw new QuestionInvalideLongueur();
         for (VDQuestion Q: questions) {
             if(question.contenue.toUpperCase().equals(Q.contenue.toUpperCase()) )
-                throw new QuestionInvalide(); }
+                throw new QuestionInvalideExistante(); }
         //Ajout
         idQuestionCompteur++;
         question.id = "" + idQuestionCompteur;
@@ -34,15 +33,15 @@ public class ServiceImplementation implements Service {
     }
 
     @Override
-    public void ajoutVote(VDVote vote) throws VoteInvalide {
+    public void ajoutVote(VDVote vote) throws VoteInvalide, VoteInvalideLongueur, VoteInvalideExistant {
         //Validation
         if(vote.id != null) throw new VoteInvalide();
-        if(vote.vote < 0 || vote.vote > 5) throw new VoteInvalide();
+        if(vote.vote < 0 || vote.vote > 5) throw new VoteInvalideLongueur();
         for (VDQuestion Q: questions) {
             for (VDVote V: votes)
                 if(Integer.parseInt(Q.id) == vote.idQuestion){
-                    if(vote.nom.toUpperCase().equals(V.nom.toUpperCase()) || vote.nom.trim().equals(0))
-                        throw new VoteInvalide();
+                    if(vote.nom.toUpperCase().equals(V.nom.toUpperCase()))
+                        throw new VoteInvalideExistant();
             }
         }
         //Ajout
